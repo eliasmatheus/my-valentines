@@ -1,9 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useCallback, useState } from 'react';
-import { IoInfiniteOutline } from 'react-icons/io5';
-import Counter from '../components/Counter/Counter';
+import { useCallback, useEffect, useState } from 'react';
+import { IoInfiniteOutline, IoHeartOutline } from 'react-icons/io5';
+import { DateTime, Duration, DurationUnits } from 'luxon';
+
+const units: DurationUnits = [
+  'years',
+  'months',
+  'days',
+  'hours',
+  'minutes',
+  'seconds',
+  'milliseconds',
+];
+
+const words = [
+  'carinho',
+  'companheirismo',
+  'atenção',
+  'cuidado',
+  'risadas',
+  'oração',
+  'comprometimento',
+  'paz',
+];
 
 const Home: NextPage = () => {
   const [picturesPaths, setPicturePaths] = useState([
@@ -25,6 +46,34 @@ const Home: NextPage = () => {
     },
     [picturesPaths],
   );
+
+  const startDate = DateTime.fromISO('2021-08-14T17:40');
+
+  const [diff, setDiff] = useState<Duration>(DateTime.now().diff(startDate, units));
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const diff = DateTime.now().diff(startDate, units);
+      setDiff(diff);
+
+      setCounter(() => {
+        if (counter > words.length - 2) {
+          return 0;
+        }
+
+        return counter + 1;
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [startDate]);
+
+  const format = useCallback((num: number) => {
+    return num > 9 ? '' + num : '0' + num;
+  }, []);
 
   return (
     <div>
@@ -49,7 +98,8 @@ const Home: NextPage = () => {
 
             <div className="date">
               <p>14 de agosto de 2021</p>
-              <p>17h, Topo do Mundo, Serra da Moeda. Brumadinho, MG</p>
+              <p>17:40h, Topo do Mundo. Brumadinho, MG</p>
+              <p>Dia, local e hora da melhor decisão da minha vida!</p>
             </div>
 
             <div className="divider">
@@ -61,10 +111,46 @@ const Home: NextPage = () => {
             </div>
 
             <div>
-              <Counter />
+              <div className="date text-start">
+                <p>Feliz</p>
+              </div>
+
+              <div className="counter-container">
+                {diff?.years > 0 && (
+                  <div className="timer-container">
+                    <h4 className="timer">{format(diff?.years)}</h4>
+                    <span className="unit"> Anos</span>
+                  </div>
+                )}
+
+                <div className="timer-container">
+                  <h4 className="timer">{format(diff?.months)}</h4>
+                  <span className="unit"> Meses</span>
+                </div>
+
+                <div className="timer-container">
+                  <h4 className="timer">{format(diff?.days)}</h4>
+                  <span className="unit"> Dias</span>
+                </div>
+
+                <div className="timer-container">
+                  <h4 className="timer">{format(diff?.hours)}</h4>
+                  <span className="unit"> Horas</span>
+                </div>
+
+                <div className="timer-container">
+                  <h4 className="timer">{format(diff?.minutes)}</h4>
+                  <span className="unit"> Minutos</span>
+                </div>
+
+                <div className="timer-container">
+                  <h4 className="timer">{format(diff?.seconds)}</h4>
+                  <span className="unit"> Segundos</span>
+                </div>
+              </div>
 
               <div className="date text-end">
-                <p>desde então...</p>
+                <p>cheios de {words[counter]}...</p>
                 {/* <IoHeartOutline size={25} /> */}
               </div>
             </div>
@@ -77,42 +163,48 @@ const Home: NextPage = () => {
               <div className="line"></div>
             </div>
 
-            <div className="pictures">
-              <div
-                role="button"
-                className="picture-container"
-                onClick={() => handleImageChange(1)}
-              >
-                <img
-                  className="picture"
-                  src={picturesPaths[1]}
-                  alt="Picture of the author"
-                />
+            <div>
+              <div className="pictures">
+                <div
+                  role="button"
+                  className="picture-container"
+                  onClick={() => handleImageChange(1)}
+                >
+                  <img
+                    className="picture"
+                    src={picturesPaths[1]}
+                    alt="Picture of the author"
+                  />
+                </div>
+
+                <div
+                  role="button"
+                  className="picture-container"
+                  onClick={() => handleImageChange(2)}
+                >
+                  <img
+                    className="picture"
+                    src={picturesPaths[2]}
+                    alt="Picture of the author"
+                  />
+                </div>
+
+                <div
+                  role="button"
+                  className="picture-container"
+                  onClick={() => handleImageChange(3)}
+                >
+                  <img
+                    className="picture"
+                    src={picturesPaths[3]}
+                    alt="Picture of the author"
+                  />
+                </div>
               </div>
 
-              <div
-                role="button"
-                className="picture-container"
-                onClick={() => handleImageChange(2)}
-              >
-                <img
-                  className="picture"
-                  src={picturesPaths[2]}
-                  alt="Picture of the author"
-                />
-              </div>
-
-              <div
-                role="button"
-                className="picture-container"
-                onClick={() => handleImageChange(3)}
-              >
-                <img
-                  className="picture"
-                  src={picturesPaths[3]}
-                  alt="Picture of the author"
-                />
-              </div>
+              <p className="credits text-end">
+                Feito com muito <IoHeartOutline size={18} /> por Elias Matheus Oliveira
+              </p>
             </div>
           </div>
         </div>

@@ -77,20 +77,29 @@ a {
     width: 100%;
     height: 545px;
 
-    padding: 50px 65px 55px;
+    padding: 45px 65px 40px;
 
     background: #fff;
     color: #5c5d56;
 
-    .date {
-      z-index: +1;
+    @media (max-width: 768px) {
+      padding: 45px 25px 40px;
+    }
 
-      font-family: 'Parisienne', cursive;
+    .date {
       font-family: 'Lora', serif;
 
       p {
         margin-bottom: 0;
       }
+    }
+
+    p.credits {
+      margin-top: 6px;
+      margin-bottom: 0;
+
+      font-family: 'Lora', serif;
+      font-size: 13px;
     }
 
     .divider {
@@ -119,16 +128,12 @@ a {
     }
 
     .counter-container {
-      z-index: +1;
-
       display: flex;
       align-items: center;
       justify-content: space-evenly;
     }
 
     .timer-container {
-      z-index: +1;
-
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -163,8 +168,6 @@ a {
     }
 
     .pictures {
-      z-index: +1;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -194,10 +197,6 @@ a {
           height: 80px;
         }
       }
-    }
-
-    @media (max-width: 768px) {
-      padding: 50px 25px 55px;
     }
   }
 }

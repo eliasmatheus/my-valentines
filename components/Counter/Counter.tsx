@@ -33,10 +33,12 @@ export default function Counter() {
 
   return (
     <div className="counter-container">
-      <div className="timer-container">
-        <h4 className="timer">{format(diff?.years)}</h4>
-        <span className="unit"> Anos</span>
-      </div>
+      {diff?.years > 0 && (
+        <div className="timer-container">
+          <h4 className="timer">{format(diff?.years)}</h4>
+          <span className="unit"> Anos</span>
+        </div>
+      )}
 
       <div className="timer-container">
         <h4 className="timer">{format(diff?.months)}</h4>
@@ -51,6 +53,11 @@ export default function Counter() {
       <div className="timer-container">
         <h4 className="timer">{format(diff?.hours)}</h4>
         <span className="unit"> Horas</span>
+      </div>
+
+      <div className="timer-container">
+        <h4 className="timer">{format(diff?.minutes)}</h4>
+        <span className="unit"> Minutos</span>
       </div>
 
       <div className="timer-container">
