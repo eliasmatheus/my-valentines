@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DateTime, Duration, DurationUnits } from 'luxon';
 import { IoInfiniteOutline, IoHeartOutline } from 'react-icons/io5';
 
@@ -24,28 +24,31 @@ const Home: NextPage = () => {
   ]);
 
   const startDate = DateTime.fromISO('2021-08-14T17:30');
-
   const [diff, setDiff] = useState<Duration>(DateTime.now().diff(startDate, units));
-  const [selectedImg, setSelectedImg] = useState(picturesPaths[0]);
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       const diff = DateTime.now().diff(startDate, units);
       setDiff(diff);
     }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, [startDate]);
 
-  const handleImageChange = (position: number) => {
-    setSelectedImg(picturesPaths[position]);
+  const handleImageChange = useCallback(
+    (position: number) => {
+      const newArray = picturesPaths;
 
-    const newArray = picturesPaths;
+      newArray.push(picturesPaths[0]);
+      newArray.splice(0, 1, picturesPaths[position]);
+      newArray.splice(position, 1);
 
-    newArray.push(picturesPaths[0]);
-    newArray.splice(0, 1, picturesPaths[position]);
-    newArray.splice(position, 1);
-
-    setPicturePaths(newArray);
-  };
+      setPicturePaths(newArray);
+    },
+    [picturesPaths],
+  );
 
   const format = (num: number) => {
     return num > 9 ? '' + num : '0' + num;
@@ -62,11 +65,17 @@ const Home: NextPage = () => {
       <main className="home">
         <div className="container">
           <div className="card img-card">
-            <img className="img" src={selectedImg} alt="Picture of the author" />
+            <img className="img" src={picturesPaths[0]} alt="Picture of the author" />
           </div>
 
           <div className="card content-card text-center">
-            <div className="date pb-4">
+            {/* <img
+              className="background-img"
+              src={picturesPaths[0]}
+              alt="Picture of the author"
+            /> */}
+
+            <div className="date">
               <p>14 de agosto de 2021</p>
               <p>17h, Topo do Mundo, Serra da Moeda. Brumadinho, MG</p>
             </div>
@@ -79,7 +88,7 @@ const Home: NextPage = () => {
               <div className="line"></div>
             </div>
 
-            <div className="py-4">
+            <div>
               <div className="counter-container">
                 <div className="timer-container">
                   <h4 className="timer">{format(diff?.years)}</h4>
@@ -107,9 +116,9 @@ const Home: NextPage = () => {
                 </div>
               </div>
 
-              <div className="date">
-                <p>Desde então</p>
-                <IoHeartOutline size={25} />
+              <div className="date text-end">
+                <p>desde então...</p>
+                {/* <IoHeartOutline size={25} /> */}
               </div>
             </div>
 
@@ -121,7 +130,7 @@ const Home: NextPage = () => {
               <div className="line"></div>
             </div>
 
-            <div className="pictures pt-4">
+            <div className="pictures">
               <div
                 role="button"
                 className="picture-container"
