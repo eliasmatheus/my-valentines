@@ -24,6 +24,9 @@ const words = [
   'oração',
   'comprometimento',
   'paz',
+  'acolhimento',
+  'paciência',
+  'cuidado de Deus',
 ];
 
 const Home: NextPage = () => {
@@ -47,7 +50,7 @@ const Home: NextPage = () => {
     [picturesPaths],
   );
 
-  const startDate = DateTime.fromISO('2021-08-14T17:40');
+  const startDate = DateTime.fromISO('2021-08-14T17:20');
 
   const [diff, setDiff] = useState<Duration>(DateTime.now().diff(startDate, units));
   const [counter, setCounter] = useState(0);
@@ -90,16 +93,10 @@ const Home: NextPage = () => {
           </div>
 
           <div className="card content-card text-center">
-            {/* <img
-              className="background-img"
-              src={picturesPaths[0]}
-              alt="Picture of the author"
-            /> */}
-
             <div className="date">
               <p>14 de agosto de 2021</p>
-              <p>17:40h, Topo do Mundo. Brumadinho, MG</p>
-              <p>Dia, local e hora da melhor decisão da minha vida!</p>
+              <p>17:20h, Topo do Mundo. Brumadinho, MG</p>
+              <p>Dia, local e hora da minha melhor decisão!</p>
             </div>
 
             <div className="divider">
@@ -111,46 +108,59 @@ const Home: NextPage = () => {
             </div>
 
             <div>
-              <div className="date text-start">
-                <p>Feliz</p>
+              <div className="date bigger text-start">
+                <p>Feliz...</p>
               </div>
 
               <div className="counter-container">
                 {diff?.years > 0 && (
                   <div className="timer-container">
                     <h4 className="timer">{format(diff?.years)}</h4>
-                    <span className="unit"> Anos</span>
+                    <span className="unit">
+                      {diff?.years === 1 ? <span>Ano</span> : <span>Anos</span>}
+                    </span>
                   </div>
                 )}
 
                 <div className="timer-container">
                   <h4 className="timer">{format(diff?.months)}</h4>
-                  <span className="unit"> Meses</span>
+                  <span className="unit">
+                    {diff?.months === 1 ? <span>Mes</span> : <span>Meses</span>}
+                  </span>
                 </div>
 
                 <div className="timer-container">
                   <h4 className="timer">{format(diff?.days)}</h4>
-                  <span className="unit"> Dias</span>
+                  <span className="unit">
+                    {diff?.days === 1 ? <span>Dia</span> : <span>Dias</span>}
+                  </span>
                 </div>
 
                 <div className="timer-container">
                   <h4 className="timer">{format(diff?.hours)}</h4>
-                  <span className="unit"> Horas</span>
+                  <span className="unit">
+                    {diff?.hours === 1 ? <span>Hora</span> : <span>Horas</span>}
+                  </span>
                 </div>
 
                 <div className="timer-container">
                   <h4 className="timer">{format(diff?.minutes)}</h4>
-                  <span className="unit"> Minutos</span>
+                  <span className="unit">
+                    {diff?.minutes === 1 ? <span>Minuto</span> : <span>Minutos</span>}
+                  </span>
                 </div>
 
                 <div className="timer-container">
                   <h4 className="timer">{format(diff?.seconds)}</h4>
-                  <span className="unit"> Segundos</span>
+
+                  <span className="unit">
+                    {diff?.seconds === 1 ? <span>Segundo</span> : <span>Segundos</span>}
+                  </span>
                 </div>
               </div>
 
               <div className="date text-end">
-                <p>cheios de {words[counter]}...</p>
+                <p>...cheios de {words[counter]}</p>
                 {/* <IoHeartOutline size={25} /> */}
               </div>
             </div>

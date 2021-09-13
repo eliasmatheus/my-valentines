@@ -77,13 +77,13 @@ a {
     width: 100%;
     height: 545px;
 
-    padding: 45px 65px 40px;
+    padding: 40px 65px 40px;
 
     background: #fff;
     color: #5c5d56;
 
     @media (max-width: 768px) {
-      padding: 45px 25px 40px;
+      padding: 40px 25px 40px;
     }
 
     .date {
@@ -91,6 +91,11 @@ a {
 
       p {
         margin-bottom: 0;
+      }
+
+      &.bigger {
+        font-size: 22px;
+        line-height: 1.2;
       }
     }
 
@@ -130,7 +135,7 @@ a {
     .counter-container {
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
+      justify-content: space-between;
     }
 
     .timer-container {
