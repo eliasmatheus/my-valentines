@@ -1,19 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useCallback, useEffect, useState } from 'react';
-import { DateTime, Duration, DurationUnits } from 'luxon';
-import { IoInfiniteOutline, IoHeartOutline } from 'react-icons/io5';
-
-const units: DurationUnits = [
-  'years',
-  'months',
-  'days',
-  'hours',
-  'minutes',
-  'seconds',
-  'milliseconds',
-];
+import { useCallback, useState } from 'react';
+import { IoInfiniteOutline } from 'react-icons/io5';
+import Counter from '../components/Counter/Counter';
 
 const Home: NextPage = () => {
   const [picturesPaths, setPicturePaths] = useState([
@@ -23,20 +13,6 @@ const Home: NextPage = () => {
     '/images/IMG_4272.jpeg',
   ]);
 
-  const startDate = DateTime.fromISO('2021-08-14T17:30');
-  const [diff, setDiff] = useState<Duration>(DateTime.now().diff(startDate, units));
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const diff = DateTime.now().diff(startDate, units);
-      setDiff(diff);
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [startDate]);
-
   const handleImageChange = useCallback(
     (position: number) => {
       const newArray = picturesPaths;
@@ -45,14 +21,10 @@ const Home: NextPage = () => {
       newArray.splice(0, 1, picturesPaths[position]);
       newArray.splice(position, 1);
 
-      setPicturePaths(newArray);
+      setPicturePaths(() => [...newArray]);
     },
     [picturesPaths],
   );
-
-  const format = (num: number) => {
-    return num > 9 ? '' + num : '0' + num;
-  };
 
   return (
     <div>
@@ -89,32 +61,7 @@ const Home: NextPage = () => {
             </div>
 
             <div>
-              <div className="counter-container">
-                <div className="timer-container">
-                  <h4 className="timer">{format(diff?.years)}</h4>
-                  <span className="unit"> Anos</span>
-                </div>
-
-                <div className="timer-container">
-                  <h4 className="timer">{format(diff?.months)}</h4>
-                  <span className="unit"> Meses</span>
-                </div>
-
-                <div className="timer-container">
-                  <h4 className="timer">{format(diff?.days)}</h4>
-                  <span className="unit"> Dias</span>
-                </div>
-
-                <div className="timer-container">
-                  <h4 className="timer">{format(diff?.hours)}</h4>
-                  <span className="unit"> Horas</span>
-                </div>
-
-                <div className="timer-container">
-                  <h4 className="timer">{format(diff?.seconds)}</h4>
-                  <span className="unit"> Segundos</span>
-                </div>
-              </div>
+              <Counter />
 
               <div className="date text-end">
                 <p>desde então...</p>
