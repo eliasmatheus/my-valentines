@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react';
 import { DateTime, Duration, DurationUnits } from 'luxon';
 import { IoInfiniteOutline, IoHeartOutline } from 'react-icons/io5';
 
-import { Container } from './styles';
-
 const units: DurationUnits = [
   'years',
   'months',
@@ -61,7 +59,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container>
+      <main className="home">
         <div className="container">
           <div className="card img-card">
             <img className="img" src={selectedImg} alt="Picture of the author" />
@@ -162,7 +160,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </main>
     </div>
   );
 };
