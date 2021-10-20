@@ -20,8 +20,8 @@ class MyDocument extends Document {
           <meta property="og:type" content="page" />
 
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:site" content="@somosagility" />
-          <meta name="twitter:creator" content="@somosagility" />
+          <meta name="twitter:site" content="@_eliasmatheus_" />
+          <meta name="twitter:creator" content="@_eliasmatheus_" />
 
           <meta name="theme-color" content="#283c5f" />
 
